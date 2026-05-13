@@ -17,18 +17,27 @@ export default function Dashboard() {
   const [openProfile, setOpenProfile] = useState(false)
 
   useEffect(() => {
-    api
-      .get("/progress/me")
-      .then(({ data }) => {
-        setStats(data)
+  const solved = JSON.parse(
+    localStorage.getItem("solvedChallenges") || "[]"
+  )
 
-        if (data.user) {
-          setUser(data.user)
-        }
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false))
-  }, [])
+  const attempts = Number(
+    localStorage.getItem("totalAttempts") || 0
+  )
+
+  const correct = Number(
+    localStorage.getItem("correctAttempts") || solved.length
+  )
+
+  setStats({
+    completed: solved.length,
+    accuracy: attempts
+      ? Math.round((correct / attempts) * 100)
+      : 0,
+  })
+
+  setLoading(false)
+}, [])
 
   const cards = [
     {
