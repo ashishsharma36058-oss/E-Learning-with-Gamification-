@@ -349,6 +349,12 @@ export default function GamePlay() {
     clearInterval(timerRef.current)
 
     try {
+      localStorage.setItem(
+  "totalAttempts",
+  String(
+    Number(localStorage.getItem("totalAttempts") || 0) + 1
+  )
+)
       const local = checkLocalAnswer()
 
       if (!local.correct) {
@@ -361,7 +367,25 @@ export default function GamePlay() {
         toast.error('Wrong Output ❌')
         return
       }
+      localStorage.setItem(
+  "correctAttempts",
+  String(
+    Number(localStorage.getItem("correctAttempts") || 0) + 1
+  )
+)
 
+const solved = JSON.parse(
+  localStorage.getItem("solvedChallenges") || "[]"
+)
+
+if (!solved.includes(ch.id)) {
+  solved.push(ch.id)
+
+  localStorage.setItem(
+    "solvedChallenges",
+    JSON.stringify(solved)
+  )
+}
       completeChallenge(ch.xp_reward, local.userOut)
     } finally {
       setSubmitting(false)
