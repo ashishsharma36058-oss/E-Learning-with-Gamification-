@@ -1,4 +1,7 @@
-backend
 *.py
 requirements.txt
 runtime.txt
+render.yaml
+alembic.ini
+__pycache__
+*.db
