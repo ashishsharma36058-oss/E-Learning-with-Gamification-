@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import useStore from '../store/useStore'
 
 function AuthPage({ mode }) {
   const store = useStore()
+  const navigate = useNavigate()
   const isLogin = mode === 'login'
 
   const [form, setForm] = useState({
@@ -122,7 +123,7 @@ function AuthPage({ mode }) {
         saveLoginDetails()
 
         toast.success('Login successful!')
-        window.location.href = '/dashboard'
+        navigate('/dashboard')
         return
       }
 
@@ -151,7 +152,7 @@ function AuthPage({ mode }) {
       saveLoginDetails()
 
       toast.success('Account created successfully!')
-      window.location.href = '/dashboard'
+      navigate('/dashboard')
       return
     } catch (err) {
       toast.error('Login/Register failed')
