@@ -108,17 +108,16 @@ const useStore = create((set, get) => ({
   },
 
   logout: () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('g_access')
-    localStorage.removeItem('g_refresh')
-    localStorage.removeItem('user')
+  localStorage.removeItem("token")
+  localStorage.removeItem("g_access")
+  localStorage.removeItem("user")
 
-    set({
-      user: null,
-      isLoggedIn: false,
-      isAuthenticated: false
-    })
-  },
+  set({
+    user: null,
+    isLoggedIn: false,
+    token: null,
+  })
+},
 
   addXP: (amount) =>
     set((state) => {
