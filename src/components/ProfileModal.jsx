@@ -1,14 +1,31 @@
 import { useState, useEffect } from "react"
 import useStore from "../store/useStore"
+import { useNavigate } from "react-router-dom"
 
 export default function ProfileModal({ open, onClose }) {
   const { user, setUser } = useStore()
 
   const [editMode, setEditMode] = useState(false)
+
   const [form, setForm] = useState({
     username: "",
     email: "",
   })
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("g_access")
+    localStorage.removeItem("g_refresh")
+    localStorage.removeItem("saved_username")
+    localStorage.removeItem("saved_password")
+    localStorage.removeItem("user")
+
+    navigate("/login", { replace: true })
+
+    window.location.reload()
+  }
 
   useEffect(() => {
     if (user) {
@@ -27,15 +44,6 @@ export default function ProfileModal({ open, onClose }) {
     })
 
     setEditMode(false)
-  }
-
-  const logout = () => {
-    localStorage.removeItem("g_access")
-    localStorage.removeItem("g_refresh")
-    localStorage.removeItem("saved_username")
-    localStorage.removeItem("saved_password")
-
-    window.location.href = "/login"
   }
 
   return (
@@ -75,7 +83,7 @@ export default function ProfileModal({ open, onClose }) {
           overflowY: "auto",
         }}
       >
-        {/* Close */}
+        {/* Close Icon */}
         <button
           onClick={onClose}
           style={{
@@ -178,7 +186,7 @@ export default function ProfileModal({ open, onClose }) {
 
         {/* Logout Button */}
         <button
-          onClick={logout}
+          onClick={handleLogout}
           style={{
             marginTop: 12,
             width: "100%",
