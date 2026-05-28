@@ -376,4 +376,4 @@ const checkStyle = {
 }
 
 export const LoginPage = () => <AuthPage mode="login" />
-export const RegisterPage = () => <AuthPage mode="register" /
+export const RegisterPage = () => <AuthPage mode="register" />
